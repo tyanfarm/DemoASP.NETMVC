@@ -1,0 +1,21 @@
+﻿@model PlanetModel  
+
+<h1>@Model.Name</h1>
+
+<div class="card d-flex" style="margin-bottom:100px;">
+    <div class="d-flex justify-content-center pt-2">
+        <div style="width:200px;">
+            <img class="w-100" style="border-radius: 50%;background-color: #333;background-size: cover;margin: auto;box-shadow: 0px 0px 10px 3px rgb(0, 0, 0, 0.3);" src="~/planet/@(Model.Name).jpeg" />
+        </div>
+    </div>
+
+    <div class="card-body">
+        <h5>@Model.VietnameseName</h5>
+
+        <div class="card-text">
+            @Model.Content
+        </div>
+
+        <a class="card-link" asp-action="Index">Các hành tinh</a>
+    </div>
+</div>

@@ -1,0 +1,13 @@
+﻿@inject WebApplication2.Services.PlanetService planetService
+
+<h1 class="pb-4">Các hành tinh trong hệ Mặt Trời</h1>
+
+<div class="list-group" style="margin-bottom:150px;">
+    @foreach(var planet in planetService)
+    {
+        // asp-action là @planet.Name để bên Controller ta sẽ đặt từng action là từng tên planets
+        <a class="list-group-item list-group-item-action" asp-action="@planet.Name">
+            @planet.Name - @planet.VietnameseName
+        </a>
+    }
+</div>
