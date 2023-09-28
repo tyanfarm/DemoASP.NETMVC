@@ -1,4 +1,4 @@
-﻿using WebApplication2.Models;
+﻿using WebApplication2.Areas.ProductManage.Models;
 
 namespace WebApplication2.Services
 {

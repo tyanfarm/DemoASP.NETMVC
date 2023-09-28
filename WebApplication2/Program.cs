@@ -42,17 +42,23 @@ if (!app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 
-// ExtendMethods\AppExtend.cs
+// ExtendMethods/AppExtend.cs
 app.AddStatusCodePage();
 
 app.UseRouting();
 
 app.UseAuthorization();
 
-// Home/Index
+// Controller không có Area
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
+
+// Cài đặt Route cho Areas
+app.MapAreaControllerRoute(
+    name:"product",
+    pattern: "/{controller=Home}/{action=Index}/{id?}",
+    areaName: "ProductManage");
 
 app.MapControllerRoute(
     name: "test",

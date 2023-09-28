@@ -4,3 +4,60 @@
 <h1>@ViewData["Title"]</h1>
 
 <p>Use this page to detail your site's privacy policy.</p>
+
+@*Url file hiện tại đang đứng *@
+<p>
+    @Url.ActionLink()
+</p>
+
+@*Url bỏ đi localhost ở đầu *@
+@*Cú pháp Action là Action("Action", "ControllerName", "{...}") *@
+<p>
+    @Url.Action()
+</p>
+
+@*Url tới action Index trong controller đang đứng (HomeController) *@
+<p>
+    @Url.Action("Index")
+</p>
+
+@*Url tới action Index kèm các attribute *@
+<p>
+    @Url.Action("Index", new{id = 1, name = "Tyan"})
+</p>
+
+@*Url tới action Neptune của Controller Planet *@
+<p>
+    @Url.Action("Neptune", "Planet")
+</p>
+
+@*Url tới action PlanetInfo của Controller Planet với attribute id = 3*@
+<p>
+    @Url.Action("PlanetInfo", "Planet", new {id = 3})
+</p>
+
+@*Url tới action Index của Controller Product trong Area ProductManage với attribute id = 3*@
+<p>
+    @Url.Action("Index", "Product", new {area = "ProductManage", id = 1})
+</p>
+
+@*Url với name là default và các attribute trong new{} *@
+<p>
+    @Url.RouteUrl("default", new {action = "HelloView", controller = "Home", id = 123, name = "Tyan"})
+</p>
+
+@*Thiết lập các cặp giá trị bằng Dictionary*@
+@*Truyền 1 lúc nhiều attribute qua routeData*@
+@{
+    var routeData = new Dictionary<string, string>()
+    {
+        {"name", "Tyan"},
+        {"age", "20"},
+        {"id", "10"},
+    };
+}
+
+<a asp-action="Index" asp-controller="Home" asp-all-route-data="@routeData">
+    EXAMPLE
+</a>
+

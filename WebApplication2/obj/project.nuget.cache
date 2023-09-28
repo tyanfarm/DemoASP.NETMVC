@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "hijgkw6J7wV1CCwHtnuSRwzcSS9kZ287ztPOLJ9irkuVIwFqcjNdzI5Jx4yW+XYMNEROO0+f5Cz2Dqsa5cqQSQ==",
+  "dgSpecHash": "H3ep/9pvEm7uMIsrSEF02I19pKmYMlgUlZkhx84o/hx6Be3Nr6+zpOZIORGw8a7Bt67BTKqjCA/K66l5PBIpIw==",
   "success": true,
-  "projectFilePath": "D:\\Tyan\\ASPNET\\WebApplication2\\WebApplication2\\WebApplication2.csproj",
+  "projectFilePath": "D:\\Tyan\\Github\\DemoASP.NETMVC\\WebApplication2\\WebApplication2.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\PC\\.nuget\\packages\\microsoft.aspnetcore.mvc.razor.extensions\\6.0.0\\microsoft.aspnetcore.mvc.razor.extensions.6.0.0.nupkg.sha512",
     "C:\\Users\\PC\\.nuget\\packages\\microsoft.aspnetcore.mvc.razor.runtimecompilation\\7.0.10\\microsoft.aspnetcore.mvc.razor.runtimecompilation.7.0.10.nupkg.sha512",

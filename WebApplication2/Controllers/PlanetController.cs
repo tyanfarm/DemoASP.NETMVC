@@ -68,9 +68,9 @@ namespace WebApplication2.Controllers
             return View("Detail", planet);
         }
 
-         [Route("star/[action]", Order = 3)]                      // star/Neptune
-         [Route("star/[controller]/[action]", Order = 2)]        // star/Planet/Neptune
-         [Route("[controller]-[action].html", Order = 1)]         // Planet-Neptune.html
+         [Route("star/[action]", Order = 3)]                                        // star/Neptune
+         [Route("star/[controller]/[action]", Order = 2, Name = "Neptune2")]        // star/Planet/Neptune
+         [Route("[controller]-[action].html", Order = 1)]                           // Planet-Neptune.html
         public IActionResult Neptune()
         {
             var planet = _planetService.Where(p => p.Name == Name).FirstOrDefault();
