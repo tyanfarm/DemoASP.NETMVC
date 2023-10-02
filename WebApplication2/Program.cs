@@ -1,9 +1,15 @@
 ﻿using Microsoft.AspNetCore.Mvc.Razor;
 using Microsoft.AspNetCore.Routing.Constraints;
+using Microsoft.EntityFrameworkCore;
 using WebApplication2.ExtendMethods;
+using WebApplication2.Models;
 using WebApplication2.Services;
 
 var builder = WebApplication.CreateBuilder(args);
+
+// Use SQL Server
+var connectString = builder.Configuration.GetConnectionString("AppMvcConnectionString");
+builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlServer(connectString));
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();

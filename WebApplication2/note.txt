@@ -1,0 +1,343 @@
+======================== CSHTML ========================
+- <hr/> 1 đường kẻ
+
+======================== FRAMEWORK SQL ========================
+- Tool -> Nuget Package Manager -> Manage Nuget Packages for Solution ..
+- Search "entityframeworkcore"
+- Install "EntityFramworkCore"
+- Install "Frameworkcore.SQLServer"
+
+======================== ASP.NET MVC ========================
+---> D:\Tyan\ASPNET\WebApplication2
+
+>>>>>>>>>>>>>>>>>>>>>>>> CONTROLLER <<<<<<<<<<<<<<<<<<<<<<<<<<<<
+1. Routing Razor Page
+	- Dùng @page "/....(/test.html)"
+
+2. Controller/Action
+	- "{controller=Home}/{action=Index}/{id?}"
+	- Phần Controller bao gồm 'Name' + 'Controller'
+	- Phần Action là các hàm trong Controller
+
+3. Logger
+	- Dùng để thông báo trạng thái trên trên terminal
+	- Khởi tạo
+		private readonly ILogger<TestController> _logger;
+
+        	public TestController(ILogger<TestController> logger)
+        	{
+            		_logger = logger;
+        	}
+
+4. IActionResult
+	Kiểu trả về                 | Phương thức
+    ------------------------------------------------
+    ContentResult               | Content()
+    EmptyResult                 | new EmptyResult()
+    FileResult                  | File()
+    ForbidResult                | Forbid()
+    JsonResult                  | Json()
+    LocalRedirectResult         | LocalRedirect()
+    RedirectResult              | Redirect()
+    RedirectToActionResult      | RedirectToAction()
+    RedirectToPageResult        | RedirectToRoute()
+    RedirectToRouteResult       | RedirectToPage()
+    PartialViewResult           | PartialView()
+    ViewComponentResult         | ViewComponent()
+    StatusCodeResult            | StatusCode()
+    ViewResult                  | View()
+
+	- Xem thêm: https://xuanthulab.net/asp-net-core-mvc-tao-ung-dung-mvc-dau-tien-c-csharp.html
+
+5. FileContentResult() - phương thức của Controller
+	private readonly IWebHostEnvironment _webHostEnvironment;
+
+        public TestController(ILogger<TestController> logger, IWebHostEnvironment webHostEnvironment)
+        {
+            _logger = logger;
+            _webHostEnvironment = webHostEnvironment;
+        }
+
+	public IActionResult DisplayImg()
+        {
+            string webRootPath = _webHostEnvironment.WebRootPath;
+            string imagePath = Path.Combine(webRootPath, "images", "ashisland.jpeg");
+
+            var bytes = System.IO.File.ReadAllBytes(imagePath);
+
+            return File(bytes, "image/jpeg");
+        }
+
+	- img sẽ được đặt trong folder wwwroot
+
+>>>>>>>>>>>>>>>>>>>>>>>> VIEW <<<<<<<<<<<<<<<<<<<<<<<<<<<<
+6. ViewResult - Phương thức đọc file .cshtml
+	- Trả về .cshtml gốc
+		return View("/MyView/Test1.cshtml");
+
+	- Trả về .cshtml kèm các tham số (@model)
+		public IActionResult ViewResult(string username) {
+			return View("/MyView/Test1.cshtml", username);
+		}
+
+	- Trả về View() sẽ auto lấy link mặc định Views/ControllerName/Action.cshtml 
+	(ControllerName - Tên file Controller, Action.cshtml - Action là tên phương thức trong Controller)
+		+ Khi return View((object)username) thì phải thêm (object) để View hiểu là username là @model
+	
+	- Cài đặt đường dẫn mới cho View()
+		+ Mặc định là "Views/ControllerName/Action.cshtml"
+		+ Ở đây ta thêm thư mục lấy View mới tên "MyView": "MyView/ControllerName/Action.cshtml
+			builder.Services.Configure<RazorViewEngineOptions>(options =>
+			{
+    				options.ViewLocationFormats.Add("/MyView/{1}/{0}" + RazorViewEngine.ViewExtension);
+			});
+		+ Khi truyền đường dẫn vô "View()" ta chỉ cần truyền tên file .cshtml (File phải đặt trong folder "Views/ControllerName/")
+			return View("Test1",username);
+
+7. addSingleton
+	- services.AddSingleton<TService, TImplementation>();
+		+ TService: Đây là kiểu của dịch vụ mà bạn muốn đăng ký.
+		+ TImplementation: Đây là kiểu triển khai cụ thể của dịch vụ.
+
+8. Truyền biến Model qua View
+	- Ở file .cshtml ta đặt @model `Tên project`.Models.`Tên class model` (@model WebApplication2.Models.ProductModel)
+
+9. ViewData
+	public IActionResult MyAction()
+	{
+    		ViewData["Message"] = "Hello, World!";
+    		return View();
+	}
+
+	<div>
+    		<p>@ViewData["Message"]</p>
+	</div>
+
+	- `ViewData[] as` dùng để trong trường hợp mà dữ liệu đó có thể không tồn tại, việc sử dụng as có thể hữu ích.
+
+10. ViewBag (tương tự như ViewData, đều là 1 cặp key-value)
+
+11. TempData
+	- Thay vì 2 phương thức truyền data ở trên chỉ truyền được qua 1 file thì với Tempdata này, tất cả các file đều có thể lấy
+		[TempData]
+        	public string StatusMessage { get; set; }
+
+	- Ứng dụng là ta làm 1 file _AlertMessage.cshtml trong folder Shared nhận một:
+		@{
+    			var message = TempData["StatusMessage"] as string;
+		}
+
+	- Lỗi được cài trong AppExtend.cs
+
+>>>>>>>>>>>>>>>>>>>>>>>>     <<<<<<<<<<<<<<<<<<<<<<<<<<<<
+12. StatusCodePageMiddleware
+	- Xử lí các trang lỗi HTTP
+	- Khi có lỗi trạng thái, middleware này sẽ tạo một trang HTML đơn giản thông báo về lỗi và gửi nó về cho client.
+
+13. Async Await
+	- Việc sử dụng async await cho phép các hoạt động bất đồng bộ (như I/O) thực thi mà không làm đứt quãng luồng chính của ứng dụng, 
+	giúp tăng hiệu suất và độ mượt của ứng dụng web.
+		app.MapGet("/sayhi", async (context) =>
+		{
+    			await context.Response.WriteAsync($"Today is {DateTime.Now}");
+		});
+
+14. MapControllerRoute
+	- Pattern cài endpoint trực tiếp
+		app.MapControllerRoute(
+			name: "test",
+			pattern: "viewproduct/{id?}",
+			defaults: new
+			{
+				controller = "Test",
+				action = "ViewProduct"
+			}
+		);
+
+	- IRouteConstraint - Ràng buộc điều kiện Route
+		+ Link: https://learn.microsoft.com/en-us/dotnet/api/microsoft.aspnetcore.routing.irouteconstraint?view=aspnetcore-7.0
+
+		app.MapControllerRoute(
+			name: "test",
+			pattern: "{url}/{id?}",
+			defaults: new
+			{
+				controller = "Test",
+				action = "ViewProduct"
+			},
+			// IRouteConstraint - Điều kiện bắt buộc Route
+			constraints: new
+			{
+				url = new RegexRouteConstraint(@"^((viewproduct)|(seeproduct))$"),
+				id = new RangeRouteConstraint(1, 5)
+			}
+		);
+
+	- Có thể ràng buộc ngay trên pattern
+		+ Link: https://learn.microsoft.com/en-us/aspnet/core/fundamentals/routing?view=aspnetcore-7.0
+
+		app.MapControllerRoute(
+			name: "test",
+			pattern: "{url:regex(^((viewproduct)|(seeproduct))$)}/{id:range(1,5)}",
+			defaults: new
+			{
+				controller = "Test",
+				action = "ViewProduct"
+			}
+		);
+
+15. AcceptVerb
+	- Đặt ở các Action để bắt buộc
+		[AcceptVerbs("POST")]
+
+16. BindProperty
+	- BindProperty chỉ hỗ trợ liên kết các attribute với các method không phải GET
+	- Thêm SupportGet=true để liên kết với method GET
+	- Nó sẽ lấy thông tin từ `asp-action` bên file .cshtml và so với `Name`
+		[BindProperty(SupportsGet =true, Name = "action")]
+		public string Name { get; set; }
+
+17. Priority Route (độ ưu tiên)
+	- Thứ tự ưu tiên từ 1 -> 3
+		[Route("star/[action]", Order = 3)]                      // star/Neptune
+		[Route("star/[controller]/[action]", Order = 2)]        // star/Planet/Neptune
+		[Route("[controller]-[action].html", Order = 1)]         // Planet-Neptune.html
+
+18. Route with Controller
+	- Nếu không đặt Route trong Controller thì link sẽ truy cập mặc định là "controller/action"
+
+	- Đặt Route ở Controller
+		[Route("SolarSystem")]
+		public class PlanetController : Controller {}
+
+	- Đặt Route ở action Index()
+		[Route("ListPlanet")]
+        public IActionResult Index() {return View();}
+
+	- Nếu truy cập action Index() thì link sẽ là "SolarSystem/ListPlanet"
+	- Nếu đặt thành [Route("/ListPlanet")] thì link sẽ truy cập thẳng chứ không qua SolarSystem "/ListPlanet"
+
+	- Đặt Route ở action Mercury() 
+		[Route("MercuryStar")]
+        public IActionResult Mercury() {...}
+
+	- Truy cập action Mercury() thì link sẽ là "SolarSystem/MercuryStar"
+	- Thay vì đặt Route ở từng action thì ta có thể đặt tại Route của Controller
+		[Route("SolarSystem/[action]")]
+    	public class PlanetController : Controller {...}
+
+		+ Nếu đặt Route ở Controller như trên thì bỏ Route ở Action nếu không sẽ lỗi
+
+19. Area trong Controller
+	- Cài đặt bằng cách đặt `[Area("ProductManage")]` ở đầu Controller
+		[Area("ProductManage")]
+    	public class ProductController : Controller {...}
+
+	- Quy chuẩn đặt thư mục là: 
+		Areas/AreaName(ProductManage)/Controllers
+		Areas/AreaName(ProductManage)/Views/ControllerName/Action.cshtml
+		Areas/AreaName(ProductManage)/Models
+
+	- Nếu file .cshtml đặt ở Views gốc thì sẽ nhận Layout từ file `_Layout.cshtml` nên
+	ở Views trong Area này ta sẽ thêm thuộc tính Layout ở .cshtml
+		@{
+			Layout = "_Layout";
+		}
+	hoặc thêm `_ViewStart.cshtml` ở trong thư mục Views
+
+	- Ví dụ về namespace của Controller
+		namespace WebApplication2.Areas.ProductManage.Controllers
+
+	- Ví dụ về namespace của Views
+		namespace WebApplication2.Areas.ProductManage.Models
+
+	- Muốn thêm Controller ở Area vào file `_Layout.cshtml` thì có thuộc tính `asp-area` 
+
+20. UrlHelper
+	- Để trong Home/Privacy trong folder ASPNET/WebApplication2 
+		+ Url.Action()
+		+ Url.ActionLink()
+		+ Url.RouteUrl()
+		+ Url.Link()
+		+ <a> <form> <button>
+			-> asp-area="Area"
+			-> asp-action="Action"
+			-> asp-controller="Product"
+			-> asp-route...="123"
+			-> asp-route="default"
+
+>>>>>>>>>>>>>>>>>>>>>>>> ENTITY FRAMEWORK WITH SQL SERVER<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+- Tạo file docker-compose.yml
+- Chuột phải chọn "Open in Intergrated Terminal"
+- "ls"
+- "docker-compose up -d" (đã bật Docker)
+
+- Tích hợp EntityFramwork làm việc với SQL SERVER
+	+ Bật Terminal với đường dẫn là thư mục đang chạy prj (D:\Tyan\Github\DemoASP.NETMVC\WebApplication2>)
+	+ Chạy các lệnh ở web "https://xuanthulab.net/asp-net-core-mvc-tich-hop-entity-framework-va-identity.html"
+	+ Vô WebApplication2.csproj để check
+	+ Vô appsettings.json và thêm attribute sau đây ở dưới ("AllowedHosts": "*",)
+		"ConnectionStrings": {
+			"AppMvcConnectionString" : "Data Source=localhost,1433; Initial Catalog=appmvc; User ID=SA;Password=Password123"
+		}
+
+	+ Tạo AppDbContext.cs trong Models
+		public class AppDbContext : DbContext
+		{
+			public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)	{...}
+
+			protected override void OnConfiguring(DbContextOptionsBuilder builder) {...}
+
+			protected override void OnModelCreating(ModelBuilder modelBuilder) {...}
+		}
+
+	+ Add Services ở trong Program.cs (`AppMvcConnectionString` là chuỗi trong `ConnectionStrings` ở appsettings.json)
+		var connectString = builder.Configuration.GetConnectionString("AppMvcConnectionString");
+		builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlServer(connectString));
+
+	+ Hiện giờ chưa có database trong Azure Data Studio nên ta vô terminal tại thư mục chính và nhập lệnh
+		dotnet ef migrations add Init
+	
+	+ Trường hợp nếu Server có Encrypt là True thì ta phải thêm "TrustServerCertificate=True" vào ConnectionString trong appsettings.json
+		"ConnectionStrings": {
+			"AppMvcConnectionString" : "Data Source=localhost,1433; Initial Catalog=appmvc; User ID=SA;Password=Password123;TrustServerCertificate=True"
+		}
+
+	+ Nhập lệnh để update database
+		dotnet ef database update	
+
+	+ Tạo 1 Controller Database trong Areas
+		dotnet aspnet-codegenerator area Database
+
+	
+======================== ====== ========================
+- Lỗi không chạy được MVC
+	+ Cài Nuget Package "Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation"
+	+ Thêm dòng sau vào Program.cs: "builder.Services.AddRazorPages().AddRazorRuntimeCompilation();"
+
+
+- Ctrl + K + D: format các dòng code
+
+
+1. Design trang chủ qua _Layout.cshtml trong folder Shared
+
+2. Ở header, các mục điều hướng (navigation):
+    - Các thuộc tính asp-controller & asp-action, điều chỉnh dựa vào:
+        app.MapControllerRoute(
+        name: "default",
+        pattern: "{controller=HelloWorld}/{action=Index}/{id?}");
+    ở trong Program.cs
+
+3. Controller: 
+    - Dựng các class để quản lí dữ liệu
+    - Mang các action
+
+4. Model: class mang các attribute 
+
+5. View
+    - Mỗi action sẽ mang 1 file cshtml trong View
+
+6. Dùng List để lưu các giá trị nhập vào thì đặt thêm static để tránh list bị reset
+
+======================== CÀI ĐẶT DOCKER ========================
+- Cài WSL2 -> Cài docker
