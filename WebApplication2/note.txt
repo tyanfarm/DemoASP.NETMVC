@@ -309,6 +309,17 @@
 	+ Tạo 1 Controller Database trong Areas
 		dotnet aspnet-codegenerator area Database
 
+- EnsureDeletedAsync() - Hàm xóa Database 
+
+- MigrateAsync() - Hàm cập nhật Database nếu không có
+
+- Đặt thêm 1 cái menu thả xuống ở _Layout.cshtml (file menu là _MenuManagePartial.cshtml)
+	+ Thêm <partial name="_MenuManagePartial" /> ở thanh bar trên cùng
+
+- Logger cho EntityFramwork
+	+ Thêm 2 dòng dưới vào appsettings.json
+		"Microsoft.EntityFrameworkCore.Query": "Information",
+      	"Microsoft.EntityFrameworkCore.Database.Command": "Information"
 	
 ======================== ====== ========================
 - Lỗi không chạy được MVC

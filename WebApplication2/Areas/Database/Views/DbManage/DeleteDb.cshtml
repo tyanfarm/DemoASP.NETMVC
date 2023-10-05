@@ -1,0 +1,18 @@
+﻿@{
+    ViewData["Title"] = "Xóa Database";
+}
+
+<h1>@ViewData["Title"]</h1>
+<p class="alert alert-danger">
+    Are you sure ?
+</p>
+
+<form method="post">
+    <button type="submit" class="btn btn-danger">
+        Delete DB
+    </button>
+
+    <hr />
+
+    <a asp-action="Index">Manage Database</a>
+</form>

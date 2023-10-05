@@ -16,6 +16,22 @@ build_property.GenerateRazorMetadataSourceChecksumAttributes = true
 build_property.MSBuildProjectDirectory = D:\Tyan\Github\DemoASP.NETMVC\WebApplication2
 build_property._RazorSourceGeneratorDebug = 
 
+[D:/Tyan/Github/DemoASP.NETMVC/WebApplication2/Areas/Database/Views/DbManage/DeleteDb.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcRGF0YWJhc2VcVmlld3NcRGJNYW5hZ2VcRGVsZXRlRGIuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Tyan/Github/DemoASP.NETMVC/WebApplication2/Areas/Database/Views/DbManage/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcRGF0YWJhc2VcVmlld3NcRGJNYW5hZ2VcSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Tyan/Github/DemoASP.NETMVC/WebApplication2/Areas/Database/Views/_ViewImports.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcRGF0YWJhc2VcVmlld3NcX1ZpZXdJbXBvcnRzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Tyan/Github/DemoASP.NETMVC/WebApplication2/Areas/Database/Views/_ViewStart.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcRGF0YWJhc2VcVmlld3NcX1ZpZXdTdGFydC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
 [D:/Tyan/Github/DemoASP.NETMVC/WebApplication2/Areas/ProductManage/Views/Product/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcUHJvZHVjdE1hbmFnZVxWaWV3c1xQcm9kdWN0XEluZGV4LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
@@ -62,6 +78,10 @@ build_metadata.AdditionalFiles.CssScope =
 
 [D:/Tyan/Github/DemoASP.NETMVC/WebApplication2/Views/Shared/_AlertMessage.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9BbGVydE1lc3NhZ2UuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Tyan/Github/DemoASP.NETMVC/WebApplication2/Views/Shared/_MenuManagePartial.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9NZW51TWFuYWdlUGFydGlhbC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
 [D:/Tyan/Github/DemoASP.NETMVC/WebApplication2/Views/Shared/_ValidationScriptsPartial.cshtml]
